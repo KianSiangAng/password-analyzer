@@ -1,18 +1,14 @@
 Password Analyzer
-
+⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻
 A Python terminal application that analyzes the strength and security of passwords. It evaluates length, complexity, entropy, risk score, and checks if the password is commonly used or has appeared in known breaches via the Have I Been Pwned (HIBP) API.
 
 The project features:
 	•	Length, complexity, and entropy checks
-	•	Common password detection from common_passwords.txt
+	•	Common password detection
 	•	HIBP breach database integration
 	•	Intuitive risk scoring system (0 = low risk, 100 = high risk)
-	•	Color-coded terminal output using colorama
-	•	Nicely formatted summary table using tabulate
 	•	Suggestions for improving weak passwords
-
-⸻
-
+⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻
 Installation and Setup
 
 Option 1: One-command setup (recommended)
@@ -27,16 +23,14 @@ This will:
 
 After setup, you are ready to run the analyzer.
 
-⸻
+⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻
 
 Option 2: Manual setup
 	1.	Install dependencies:
 
 pip install -r requirements.txt
 	2.	Make sure common_passwords.txt exists in your project folder.
-
-⸻
-
+⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻
 Usage
 
 Run the analyzer:
@@ -47,7 +41,7 @@ Enter your password (input is hidden) when prompted. The program will display:
 	•	Password summary table (Length, Complexity, Entropy, Breaches, Risk Score)
 	•	Detailed analysis (rating, breach info, suggestions)
 
-⸻
+⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻
 
 Example Output
 
@@ -65,14 +59,14 @@ Suggestions:
 • Add uppercase letters
 • Mix letters, numbers, and special characters for stronger password
 
-⸻
+⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻
 
 Risk Score Explanation
 	•	0–30: Low risk (green) – strong password
 	•	31–70: Moderate risk (yellow) – acceptable password
 	•	71–100: High risk (red) – weak or breached password
 
-⸻
+⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻
 
 Dependencies
 	•	Python 3.9+
@@ -80,8 +74,9 @@ Dependencies
 	•	requests – for HIBP API requests
 	•	tabulate – for formatted tables
 
-⸻
+⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻⸻
 
 License
 
 This project is licensed under the MIT License.
+
