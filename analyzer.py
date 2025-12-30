@@ -1,4 +1,3 @@
-# analyzer.py
 from getpass import getpass
 import string
 import math
@@ -7,12 +6,8 @@ import requests
 from colorama import init, Fore, Style
 from tabulate import tabulate
 
-# Initialize colorama
 init(autoreset=True)
 
-# ------------------------------------------------------------
-# LOAD COMMON PASSWORDS
-# ------------------------------------------------------------
 def load_common_passwords():
     try:
         with open("common_passwords.txt") as f:
@@ -22,9 +17,6 @@ def load_common_passwords():
 
 COMMON_PASSWORDS = load_common_passwords()
 
-# ------------------------------------------------------------
-# CHECK PASSWORD LENGTH
-# ------------------------------------------------------------
 def check_length(password):
     if len(password) < 8:
         return 0, "Too short"
@@ -32,10 +24,7 @@ def check_length(password):
         return 1, "Acceptable"
     else:
         return 2, "Strong"
-
-# ------------------------------------------------------------
-# CHECK PASSWORD COMPLEXITY
-# ------------------------------------------------------------
+        
 def check_complexity(password):
     score = 0
     feedback = []
@@ -56,16 +45,10 @@ def check_complexity(password):
     else:
         feedback.append("Add special characters")
     return score, feedback
-
-# ------------------------------------------------------------
-# CHECK COMMON PASSWORD
-# ------------------------------------------------------------
+    
 def is_common_password(password):
     return password.lower() in COMMON_PASSWORDS
-
-# ------------------------------------------------------------
-# CALCULATE ENTROPY
-# ------------------------------------------------------------
+    
 def calculate_entropy(password):
     charset_size = 0
     if any(c.islower() for c in password):
@@ -81,9 +64,6 @@ def calculate_entropy(password):
     entropy = len(password) * math.log2(charset_size)
     return round(entropy, 2)
 
-# ------------------------------------------------------------
-# OVERALL RATING
-# ------------------------------------------------------------
 def overall_rating(entropy, is_common, breached_count):
     if is_common or breached_count > 0 or entropy < 40:
         return "Weak"
@@ -92,9 +72,6 @@ def overall_rating(entropy, is_common, breached_count):
     else:
         return "Strong"
 
-# ------------------------------------------------------------
-# HIBP CHECK
-# ------------------------------------------------------------
 def sha1_hash(password):
     return hashlib.sha1(password.encode("utf-8")).hexdigest().upper()
 
@@ -121,9 +98,6 @@ def check_hibp(password):
             return int(count)
     return 0
 
-# ------------------------------------------------------------
-# ANALYZE PASSWORD
-# ------------------------------------------------------------
 def analyze_password(password):
     if not password:
         print(Fore.RED + "Password cannot be empty")
@@ -136,21 +110,18 @@ def analyze_password(password):
     breached_count = check_hibp(password)
     rating = overall_rating(entropy, common, breached_count)
 
-    # Compute risk score (0 = low risk/safe, 100 = high risk/dangerous)
     risk = 100
-    risk -= entropy / 2          # reduce risk with higher entropy
+    risk -= entropy / 2        
     risk -= complexity_score * 10
     risk -= length_score * 5
     if breached_count > 0:
-        risk = 100               # breached passwords are maximum risk
+        risk = 100          
     risk = max(0, min(100, int(risk)))
 
-    # Color coding
     length_color = Fore.GREEN if length_score == 2 else Fore.YELLOW if length_score == 1 else Fore.RED
     complexity_color = Fore.GREEN if complexity_score == 4 else Fore.YELLOW if complexity_score >= 2 else Fore.RED
     entropy_color = Fore.GREEN if entropy >= 60 else Fore.YELLOW if entropy >= 40 else Fore.RED
-
-    # Breaches color
+    
     if breached_count == -1:
         breaches_color = Fore.YELLOW
         breaches_display = "N/A"
@@ -161,7 +132,6 @@ def analyze_password(password):
         breaches_color = Fore.RED
         breaches_display = str(breached_count)
 
-    # Risk color (green = safe, yellow = moderate, red = high risk)
     if risk <= 30:
         risk_color = Fore.GREEN
     elif risk <= 70:
@@ -169,7 +139,6 @@ def analyze_password(password):
     else:
         risk_color = Fore.RED
 
-    # Summary Table
     table = [
         [
             length_color + length_msg,
@@ -184,7 +153,6 @@ def analyze_password(password):
     print("\n--- Password Summary ---")
     print(tabulate(table, headers=headers, tablefmt="fancy_grid"))
 
-    # Detailed analysis
     print("\n--- Detailed Analysis ---")
     print("Rating:", Fore.CYAN + rating)
 
@@ -205,9 +173,6 @@ def analyze_password(password):
         for tip in complexity_feedback:
             print("•", tip)
 
-# ------------------------------------------------------------
-# MAIN
-# ------------------------------------------------------------
 def main():
     try:
         password = getpass("Enter password to analyze (input hidden): ")
